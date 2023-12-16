@@ -6,6 +6,9 @@
 #include <string>
 #include <tuple>
 #include <vector>
+#include <utility>
+#include <sstream>
+#include <stdexcept>
 
 enum class DayOfWeek {
     Monday,
@@ -14,7 +17,8 @@ enum class DayOfWeek {
     Thursday,
     Friday,
     Saturday,
-    Sunday
+    Sunday,
+    Invalid
 };
 
 DayOfWeek operator+(DayOfWeek day, int n);
@@ -75,4 +79,6 @@ class Timeslot {
     bool _is_valid = false;
 };
 
-std::string day_to_string(DayOfWeek day);
+DayOfWeek string_to_day(const std::string& day);
+
+std::pair<int, int> convert_time(const std::string& time_str);

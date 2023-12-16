@@ -85,3 +85,26 @@ std::ostream& operator<<(std::ostream& os, const Timeslot& ts) {
     }
     return os;
 }
+
+DayOfWeek string_to_day(const std::string& day) {
+    if (day == "Monday") return DayOfWeek::Monday;
+    else if (day == "Tuesday") return DayOfWeek::Tuesday;
+    else if (day == "Wednesday") return DayOfWeek::Wednesday;
+    else if (day == "Thursday") return DayOfWeek::Thursday;
+    else if (day == "Friday") return DayOfWeek::Friday;
+    else if (day == "Saturday") return DayOfWeek::Saturday;
+    else if (day == "Sunday") return DayOfWeek::Sunday;
+    else return DayOfWeek::Invalid;
+}
+
+std::pair<int, int> convert_time(const std::string& time_str) {
+    std::istringstream iss(time_str);
+    int hour, minute;
+    char delim;
+
+    if (!(iss >> hour >> delim >> minute) || delim != ':' || hour < 0 || hour > 23 || minute < 0 || minute > 59) {
+        throw std::invalid_argument("Invalid time format");
+    }
+
+    return std::make_pair(hour, minute);
+}
