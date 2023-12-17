@@ -80,5 +80,7 @@ class Timeslot {
 };
 
 DayOfWeek string_to_day(const std::string& day);
+std::string day_to_string(const DayOfWeek& day);
 
 std::pair<int, int> convert_time(const std::string& time_str);
+std::string convert_time_string(const std::pair<int, int>& time);

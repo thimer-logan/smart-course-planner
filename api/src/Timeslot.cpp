@@ -97,6 +97,27 @@ DayOfWeek string_to_day(const std::string& day) {
     else return DayOfWeek::Invalid;
 }
 
+std::string day_to_string(const DayOfWeek& day) {
+    switch (day) {
+        case DayOfWeek::Monday:
+            return "Monday";
+        case DayOfWeek::Tuesday:
+            return "Tuesday";
+        case DayOfWeek::Wednesday:
+            return "Wednesday";
+        case DayOfWeek::Thursday:
+            return "Thursday";
+        case DayOfWeek::Friday:
+            return "Friday";
+        case DayOfWeek::Saturday:
+            return "Saturday";
+        case DayOfWeek::Sunday:
+            return "Sunday";
+        default:
+            return "Unknown Day";
+    }
+}
+
 std::pair<int, int> convert_time(const std::string& time_str) {
     std::istringstream iss(time_str);
     int hour, minute;
@@ -107,4 +128,8 @@ std::pair<int, int> convert_time(const std::string& time_str) {
     }
 
     return std::make_pair(hour, minute);
+}
+
+std::string convert_time_string(const std::pair<int, int>& time) {
+    return (std::to_string(time.first) + ":" + std::to_string(time.second));
 }
