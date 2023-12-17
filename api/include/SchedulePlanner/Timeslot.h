@@ -64,6 +64,8 @@ class Timeslot {
 
     Timeslot(const std::set<DayTimePair>& pairs);
 
+    const std::set<DayTimePair>& get_day_time_pairs() const;
+
     bool is_valid() const;
 
     bool conflicts_with(const Timeslot& other) const;

@@ -37,6 +37,10 @@ Timeslot::Timeslot(const std::set<DayTimePair>& pairs)
     // std::sort(_day_time_pairs.begin(), _day_time_pairs.end());
 }
 
+const std::set<DayTimePair>& Timeslot::get_day_time_pairs() const {
+    return _day_time_pairs;
+}
+
 bool Timeslot::is_valid() const {
     return _is_valid;
 }
