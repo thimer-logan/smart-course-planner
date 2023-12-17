@@ -135,5 +135,9 @@ std::pair<int, int> convert_time(const std::string& time_str) {
 }
 
 std::string convert_time_string(const std::pair<int, int>& time) {
-    return (std::to_string(time.first) + ":" + std::to_string(time.second));
+    std::ostringstream oss;
+    oss << std::setfill('0') << std::setw(2) << time.first
+        << ":" 
+        << std::setfill('0') << std::setw(2) << time.second;
+    return oss.str();
 }
