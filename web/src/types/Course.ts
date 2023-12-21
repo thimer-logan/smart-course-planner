@@ -4,6 +4,7 @@ export default interface Course {
   id: string;
   name: string;
   sections: CourseSection[];
+  color: string;
 }
 
 export interface CourseSection {

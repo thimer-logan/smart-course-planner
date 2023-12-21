@@ -3,7 +3,7 @@ import Course from "../../types/Course";
 
 const CourseItem = (props: Course) => {
   return (
-    <div className="flex flex-col items-start p-2 rounded-md bg-bittersweet">
+    <div className={`flex flex-col items-start p-2 rounded-md ${props.color}`}>
       <h2>
         <strong>{props.id}</strong> - {props.name}
       </h2>

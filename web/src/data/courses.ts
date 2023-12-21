@@ -1,3 +1,4 @@
+import courseColors from "../components/constants/courseColors";
 import Course from "../types/Course";
 import { DayOfWeek } from "../types/Timeslot";
 
@@ -29,6 +30,7 @@ const courses: Course[] = [
         ],
       },
     ],
+    color: courseColors[0],
   },
   {
     id: "ECE 449",
@@ -64,6 +66,36 @@ const courses: Course[] = [
         ],
       },
     ],
+    color: courseColors[1],
+  },
+  {
+    id: "CMPUT 301",
+    name: "Intro to Software Engineering",
+    sections: [
+      {
+        name: "LEC B1",
+        location: "CCIS L1-140",
+        instructor: "Bob Ross",
+        timeslots: [
+          {
+            dayOfWeek: DayOfWeek.Monday,
+            startTime: "10:00",
+            endTime: "10:50",
+          },
+          {
+            dayOfWeek: DayOfWeek.Wednesday,
+            startTime: "10:00",
+            endTime: "10:50",
+          },
+          {
+            dayOfWeek: DayOfWeek.Friday,
+            startTime: "10:00",
+            endTime: "10:50",
+          },
+        ],
+      },
+    ],
+    color: courseColors[2],
   },
 ];
 
