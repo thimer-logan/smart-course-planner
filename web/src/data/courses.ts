@@ -1,4 +1,4 @@
-import courseColors from "../components/constants/courseColors";
+import { courseHexColors } from "../components/constants/courseColors";
 import Course from "../types/Course";
 import { DayOfWeek } from "../types/Timeslot";
 
@@ -30,7 +30,7 @@ const courses: Course[] = [
         ],
       },
     ],
-    color: courseColors[0],
+    color: courseHexColors[0],
   },
   {
     id: "ECE 449",
@@ -60,13 +60,13 @@ const courses: Course[] = [
         timeslots: [
           {
             dayOfWeek: DayOfWeek.Tuesday,
-            startTime: "2:00",
-            endTime: "4:50",
+            startTime: "14:00",
+            endTime: "16:50",
           },
         ],
       },
     ],
-    color: courseColors[1],
+    color: courseHexColors[1],
   },
   {
     id: "CMPUT 301",
@@ -95,7 +95,7 @@ const courses: Course[] = [
         ],
       },
     ],
-    color: courseColors[2],
+    color: courseHexColors[2],
   },
 ];
 
