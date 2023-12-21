@@ -1,3 +1,4 @@
+import { Event } from "react-big-calendar";
 import Timeslot from "./Timeslot";
 
 export default interface Course {
@@ -12,4 +13,9 @@ export interface CourseSection {
   timeslots: Timeslot[];
   location: string;
   instructor: string;
+}
+
+export interface CourseEvent extends Event {
+  id: string;
+  color: string;
 }
