@@ -1,4 +1,4 @@
-import { courseHexColors } from "../components/constants/courseColors";
+import { courseHexColors } from "../constants/courseColors";
 import Course from "../types/Course";
 import { DayOfWeek } from "../types/Timeslot";
 
