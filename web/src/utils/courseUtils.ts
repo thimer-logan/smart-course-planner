@@ -51,7 +51,7 @@ export const courseToCourseEvent = (course: Course): CourseEvent[] => {
         const slot: CourseEvent = timeslotToEvent(timeslot);
         slot.id = course.id;
         slot.color = course.color;
-        slot.title = `${course.id}\n${section.name}\n${section.location}`;
+        slot.title = `${course.id} ${section.name}\n${section.location}`;
         return slot;
       });
     }
