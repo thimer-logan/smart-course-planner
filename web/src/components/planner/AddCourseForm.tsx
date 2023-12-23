@@ -1,18 +1,24 @@
 import { useState } from "react";
-import { DayOfWeek } from "../../types/Timeslot";
-import DayPicker from "../ui/DayPicker";
-import { DatePicker } from "rsuite";
+import AddSectionForm from "./AddSectionForm";
+import Timeslot from "../../types/Timeslot";
+import { CourseSection } from "../../types/Course";
+import CourseSectionList from "../course/CourseSectionList";
 
 const AddCourseForm = () => {
-  const [selectedDays, setSelectedDays] = useState<DayOfWeek[]>([]);
   const [addSectionVisible, setAddSectionVisible] = useState<boolean>(false);
+  const [sections, setSections] = useState<CourseSection[]>([]);
 
-  const toggleDay = (day: DayOfWeek) => {
-    setSelectedDays((currentDays) =>
-      currentDays.includes(day)
-        ? currentDays.filter((d) => d !== day)
-        : [...currentDays, day]
-    );
+  const sectionRemoveHandler = (name: string) => {
+    setSections((prev) => prev.filter((e) => e.name !== name));
+  };
+
+  const sectionAddedHandler = (section: CourseSection) => {
+    setSections((prev) => [...prev, section]);
+    setAddSectionVisible(false);
+  };
+
+  const sectionAddCancelHandler = () => {
+    setAddSectionVisible(false);
   };
 
   return (
@@ -26,23 +32,18 @@ const AddCourseForm = () => {
           + New Section
         </button>
       </div>
+      <div className="px-6">
+        <CourseSectionList
+          sections={sections}
+          onRemove={sectionRemoveHandler}
+        />
+      </div>
+
       {addSectionVisible && (
-        <div className="flex flex-col justify-between">
-          <div className="flex flex-row justify-between items-center py-4 px-2 rounded">
-            <DayPicker selectedDays={selectedDays} toggleDay={toggleDay} />
-            <DatePicker
-              format="HH:mm"
-              ranges={[]}
-              placement="leftStart"
-              style={{ width: 200 }}
-            />
-          </div>
-          <div className="flex flex-row justify-end gap-1 px-2">
-            <button className="bg-bittersweet text-white text-s px-4 py-1 rounded-lg shadow-lg hover:bg-bittersweet-700 transition duration-300">
-              Confirm
-            </button>
-          </div>
-        </div>
+        <AddSectionForm
+          onSubmit={sectionAddedHandler}
+          onCancel={sectionAddCancelHandler}
+        />
       )}
     </div>
   );
