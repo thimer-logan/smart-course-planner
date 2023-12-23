@@ -13,11 +13,11 @@ const DayPicker = ({ selectedDays, toggleDay }: DayPickerProps) => {
         <button
           key={day}
           onClick={() => toggleDay(day)}
-          className={`h-10 w-10 rounded-full hover:bg-khaki-300 ${
+          className={`h-9 w-9 rounded-full hover:bg-khaki-300 ${
             selectedDays.includes(day) ? "bg-khaki text-white" : "bg-gray-200"
           }`}
         >
-          {day.charAt(0)}
+          {day === DayOfWeek.Thursday ? "R" : day.charAt(0)}
         </button>
       ))}
     </div>
