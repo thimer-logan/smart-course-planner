@@ -15,12 +15,15 @@ function Backdrop({ onClose }: BackdropProps) {
 }
 
 interface ModalOverlayProps {
+  className?: string;
   children: React.ReactNode;
 }
 
-function ModalOverlay({ children }: ModalOverlayProps) {
+function ModalOverlay({ className, children }: ModalOverlayProps) {
   return (
-    <div className="fixed top-[15vh] left-[50%] -translate-x-1/2 w-[90%] max-h-[80vh] overflow-auto bg-slate-100 p-4 rounded-2xl shadow-md z-30 md:w-[40rem]">
+    <div
+      className={`fixed top-[15vh] left-[15%] w-[90%] overflow-auto bg-slate-100 p-4 rounded-2xl shadow-lg z-30 md:w-[40rem] ${className}`}
+    >
       <div>{children}</div>
     </div>
   );
@@ -28,7 +31,7 @@ function ModalOverlay({ children }: ModalOverlayProps) {
 
 interface ModalProps extends BackdropProps, ModalOverlayProps {}
 
-function Modal({ onClose, children }: ModalProps) {
+function Modal({ onClose, className, children }: ModalProps) {
   return (
     <>
       {ReactDOM.createPortal(
@@ -36,7 +39,7 @@ function Modal({ onClose, children }: ModalProps) {
         document.getElementById("overlays") as HTMLElement
       )}
       {ReactDOM.createPortal(
-        <ModalOverlay>{children}</ModalOverlay>,
+        <ModalOverlay className={className}>{children}</ModalOverlay>,
         document.getElementById("overlays") as HTMLElement
       )}
     </>
