@@ -1,5 +1,5 @@
 import Course, { CourseEvent, CourseSection } from "../types/Course";
-import Timeslot from "../types/Timeslot";
+import Timeslot, { DayOfWeek } from "../types/Timeslot";
 
 export const getDayOfWeek = (dayName: string): Date => {
   const daysOfWeek = [
@@ -104,4 +104,20 @@ export const getMaxAndMinTime = (
   );
 
   return { maxTime, minTime };
+};
+
+export const sortTimeslotsByDay = (timeslots: Timeslot[]): Timeslot[] => {
+  return timeslots.sort((a, b) => {
+    const order = [
+      DayOfWeek.Sunday,
+      DayOfWeek.Monday,
+      DayOfWeek.Tuesday,
+      DayOfWeek.Wednesday,
+      DayOfWeek.Thursday,
+      DayOfWeek.Friday,
+      DayOfWeek.Saturday,
+    ];
+
+    return order.indexOf(a.dayOfWeek) - order.indexOf(b.dayOfWeek);
+  });
 };
