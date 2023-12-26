@@ -14,6 +14,7 @@ declare type RangeValue<DateType> =
 interface AddSectionFormProps {
   onSubmit: (section: CourseSection) => void;
   onCancel: () => void;
+  invalidNames?: string[];
 }
 
 interface FormInputs {
@@ -25,16 +26,22 @@ interface FormInputs {
 }
 
 const AddSectionForm = ({ onSubmit, onCancel }: AddSectionFormProps) => {
-  const { handleSubmit, control, getFieldState, getValues, setValue } =
-    useForm<FormInputs>({
-      defaultValues: {
-        name: "",
-        location: "",
-        instructor: "",
-        days: [],
-        times: null,
-      },
-    });
+  const {
+    handleSubmit,
+    formState: { errors },
+    control,
+    getFieldState,
+    getValues,
+    setValue,
+  } = useForm<FormInputs>({
+    defaultValues: {
+      name: "",
+      location: "",
+      instructor: "",
+      days: [],
+      times: null,
+    },
+  });
 
   const submitHandler: SubmitHandler<FormInputs> = (data) => {
     const timeslots: Timeslot[] = data.days.map((day: DayOfWeek) => {
@@ -76,18 +83,7 @@ const AddSectionForm = ({ onSubmit, onCancel }: AddSectionFormProps) => {
     setValue("times", time);
   };
 
-  // const submitHandler = () => {
-  //   const timeslots: Timeslot[] = selectedDays.map((day: DayOfWeek) => {
-  //     const timeslot: Timeslot = {
-  //       dayOfWeek: day,
-  //       startTime: `${selectedTime?.[0]?.hour}:${selectedTime?.[0]?.minute}`,
-  //       endTime: `${selectedTime?.[1]?.hour}:${selectedTime?.[1]?.minute}`,
-  //     };
-
-  //     return timeslot;
-  //   });
-  // };
-  console.log(getValues());
+  const errorMessage = Object.values(errors).find((s) => s.message)?.message;
 
   return (
     <form
@@ -157,11 +153,7 @@ const AddSectionForm = ({ onSubmit, onCancel }: AddSectionFormProps) => {
             validate: (value, formValues) => value.length > 0,
           }}
           render={({ field }) => (
-            <DayPicker
-              selectedDays={field.value}
-              toggleDay={toggleDay}
-              {...field}
-            />
+            <DayPicker selectedDays={field.value} toggleDay={toggleDay} />
           )}
         />
 
@@ -184,6 +176,8 @@ const AddSectionForm = ({ onSubmit, onCancel }: AddSectionFormProps) => {
           )}
         />
       </div>
+
+      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
       <div className="flex flex-row justify-end gap-1">
         <button
