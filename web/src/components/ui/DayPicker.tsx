@@ -12,6 +12,7 @@ const DayPicker = ({ selectedDays, toggleDay }: DayPickerProps) => {
       {Object.values(DayOfWeek).map((day) => (
         <button
           key={day}
+          type="button"
           onClick={() => toggleDay(day)}
           className={`h-9 w-9 rounded-full hover:bg-khaki-300 ${
             selectedDays.includes(day) ? "bg-khaki text-white" : "bg-gray-200"
