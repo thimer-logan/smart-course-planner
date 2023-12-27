@@ -91,7 +91,7 @@ const AddCourseForm = ({
   };
 
   return (
-    <div className="flex flex-col gap-1">
+    <div className="flex flex-col gap-3">
       <h2 className="font-bold text-lg">Add new course</h2>
       <div className="flex flex-row justify-between gap-3 my-2">
         <Input
