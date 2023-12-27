@@ -19,9 +19,20 @@ export const plannerSlice = createSlice({
     addCourse: (state, action: PayloadAction<Course>) => {
       state.courses.push(action.payload);
     },
+    removeCourse: (state, action: PayloadAction<string>) => {
+      const itemIndex: number = state.courses.findIndex(
+        (item) => item.id === action.payload
+      );
+
+      if (itemIndex === -1) {
+        return;
+      }
+
+      state.courses.splice(itemIndex, 1);
+    },
   },
 });
 
-export const { addCourse } = plannerSlice.actions;
+export const { addCourse, removeCourse } = plannerSlice.actions;
 
 export default plannerSlice.reducer;
