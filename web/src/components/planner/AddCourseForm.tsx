@@ -31,9 +31,6 @@ const AddCourseForm = ({
     sections: "",
   });
 
-  console.log(course);
-  console.log(defaultValue);
-
   const inputStyles = "hover:border-bittersweet focus:border-bittersweet";
 
   const updateField = (field: string, value: string | CourseSection[]) => {
