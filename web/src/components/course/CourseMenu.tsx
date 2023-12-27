@@ -1,22 +1,46 @@
 import Course from "../../types/Course";
-import courseColors from "../../constants/courseColors";
 import { useState } from "react";
 import Modal from "../ui/Modal";
 import AddCourseForm from "../planner/AddCourseForm";
+import CourseList from "./CourseList";
 
 interface CourseMenuProps {
   courses: Course[];
+  onCourseAdded: (course: Course) => void;
+  onCourseRemoved: (course: Course) => void;
 }
 
-const CourseMenu = ({ courses }: CourseMenuProps) => {
+const CourseMenu = ({
+  courses,
+  onCourseAdded,
+  onCourseRemoved,
+}: CourseMenuProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
+  const [selectedCourse, setSelectedCourse] = useState<Course | undefined>(
+    undefined
+  );
 
-  const handleOpenModal = () => {
+  const handleOpenModal = (course?: Course) => {
+    setSelectedCourse(course);
     setModalOpen(true);
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
+    setSelectedCourse(undefined); // Reset the selected course when the modal is closed
+  };
+
+  const courseClickedHandler = (course: Course) => {
+    handleOpenModal(course);
+  };
+
+  const courseAddedHandler = (course: Course) => {
+    onCourseAdded(course);
+    setModalOpen(false);
+  };
+
+  const courseRemovedHandler = (course: Course) => {
+    onCourseRemoved(course);
   };
 
   return (
@@ -26,25 +50,24 @@ const CourseMenu = ({ courses }: CourseMenuProps) => {
           <h2 className="text-lg font-bold text-gray-700">Courses</h2>
           <button
             className="text-sm text-bittersweet-500 hover:text-bittersweet-700"
-            onClick={handleOpenModal}
+            onClick={() => handleOpenModal()}
           >
             + Add new
           </button>
         </div>
-        <ul>
-          {courses.map((course, index) => (
-            <li
-              key={course.name}
-              className={`${courseColors[index]} rounded-lg mb-2 p-2 shadow-inner`}
-            >
-              {course.name}
-            </li>
-          ))}
-        </ul>
+        <CourseList
+          courses={courses}
+          onCourseClicked={courseClickedHandler}
+          onCourseDelete={courseRemovedHandler}
+        />
       </div>
       {modalOpen && (
-        <Modal onClose={handleCloseModal}>
-          <AddCourseForm />
+        <Modal className="min-h-96">
+          <AddCourseForm
+            onSubmit={courseAddedHandler}
+            onCancel={handleCloseModal}
+            defaultValue={selectedCourse}
+          />
         </Modal>
       )}
     </>
