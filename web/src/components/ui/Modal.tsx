@@ -2,7 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 
 interface BackdropProps {
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 function Backdrop({ onClose }: BackdropProps) {
