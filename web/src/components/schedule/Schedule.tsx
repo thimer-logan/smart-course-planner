@@ -11,6 +11,10 @@ interface ScheduleProps {
 }
 
 const Schedule = ({ events }: ScheduleProps) => {
+  if (events.length <= 0) {
+    return <h2>No events configured</h2>;
+  }
+
   const { maxTime, minTime } = getMaxAndMinTime(events);
 
   const eventStyleGetter: EventPropGetter<CourseEvent> = (
