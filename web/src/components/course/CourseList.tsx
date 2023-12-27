@@ -3,13 +3,24 @@ import CourseItem from "./CourseItem";
 
 interface CourseListProps {
   courses: Course[];
+  onCourseClicked: (course: Course) => void;
+  onCourseDelete: (course: Course) => void;
 }
 
-const CourseList = ({ courses }: CourseListProps) => {
+const CourseList = ({
+  courses,
+  onCourseClicked,
+  onCourseDelete,
+}: CourseListProps) => {
   return (
-    <div className="flex flex-col gap-2 m-3">
-      {courses.map((course: Course) => (
-        <CourseItem {...course} />
+    <div>
+      {courses.map((course, index) => (
+        <CourseItem
+          key={index}
+          course={course}
+          onClick={() => onCourseClicked(course)}
+          onDelete={() => onCourseDelete(course)}
+        />
       ))}
     </div>
   );

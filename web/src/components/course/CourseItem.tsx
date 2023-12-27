@@ -1,32 +1,32 @@
 import React from "react";
 import Course from "../../types/Course";
+import { MdDeleteForever } from "react-icons/md";
 
-const CourseItem = (props: Course) => {
+interface CourseItemProps {
+  course: Course;
+  onClick: () => void;
+  onDelete: () => void;
+}
+
+const CourseItem = ({ course, onClick, onDelete }: CourseItemProps) => {
+  const handleDeleteClick = (event: React.MouseEvent) => {
+    event.stopPropagation(); // This stops the click event from bubbling up to the parent div
+    onDelete();
+  };
+
   return (
-    <div className={`flex flex-col items-start p-2 rounded-md ${props.color}`}>
-      <h2>
-        <strong>{props.id}</strong> - {props.name}
-      </h2>
-      <div className="grid grid-cols-4 gap-4">
-        <div className="font-bold">Name</div>
-        <div className="font-bold">Timeslots</div>
-        <div className="font-bold">Location</div>
-        <div className="font-bold">Instructor</div>
-
-        {props.sections.map((course) => (
-          <>
-            <div>{course.name}</div>
-            <div>
-              {course.timeslots.map((slot, index) => (
-                <div key={index}>
-                  {`${slot.dayOfWeek} ${slot.startTime} - ${slot.endTime}`}
-                </div>
-              ))}
-            </div>
-            <div>{course.location}</div>
-            <div>{course.instructor}</div>
-          </>
-        ))}
+    <div
+      className={`flex flex-row justify-between items-center rounded-lg mb-2 px-2 py-1 shadow-inner cursor-pointer`}
+      style={{ backgroundColor: course.color }}
+      onClick={onClick}
+    >
+      <div>{course.name}</div>
+      <div>
+        <MdDeleteForever
+          className="rounded-full p-1 cursor-pointer hover:bg-red-500"
+          size={28}
+          onClick={handleDeleteClick}
+        />
       </div>
     </div>
   );
