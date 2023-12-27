@@ -107,7 +107,8 @@ export const getMaxAndMinTime = (
 };
 
 export const sortTimeslotsByDay = (timeslots: Timeslot[]): Timeslot[] => {
-  return timeslots.sort((a, b) => {
+  const timeslotsCopy = [...timeslots];
+  return timeslotsCopy.sort((a, b) => {
     const order = [
       DayOfWeek.Sunday,
       DayOfWeek.Monday,
