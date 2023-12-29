@@ -122,3 +122,9 @@ export const sortTimeslotsByDay = (timeslots: Timeslot[]): Timeslot[] => {
     return order.indexOf(a.dayOfWeek) - order.indexOf(b.dayOfWeek);
   });
 };
+
+export const timeslotToString = (slot: Timeslot) => {
+  const day =
+    slot.dayOfWeek === DayOfWeek.Thursday ? "R" : slot.dayOfWeek.charAt(0);
+  return `${day} ${slot.startTime} - ${slot.endTime}`;
+};
