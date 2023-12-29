@@ -1,10 +1,10 @@
 import { useState } from "react";
 import AddSectionForm from "./AddSectionForm";
 import Course, { CourseSection } from "../../types/Course";
-import CourseSectionList from "../course/CourseSectionList";
 import { Input } from "antd";
 import ColorPicker from "../ui/ColorPicker";
 import { courseHexColors } from "../../constants/courseColors";
+import CourseSectionTable from "../course/CourseSectionTable";
 
 interface AddCourseFormProps {
   onSubmit: (course: Course) => void;
@@ -18,6 +18,9 @@ const AddCourseForm = ({
   defaultValue,
 }: AddCourseFormProps) => {
   const [addSectionVisible, setAddSectionVisible] = useState<boolean>(false);
+  const [selectedSection, setSelectedSection] = useState<
+    CourseSection | undefined
+  >(undefined);
   const [course, setCourse] = useState<Course>({
     id: defaultValue?.id || "",
     name: defaultValue?.name || "",
@@ -45,19 +48,36 @@ const AddCourseForm = ({
     sections: () => course.sections.length > 0,
   };
 
-  const sectionRemoveHandler = (name: string) => {
+  const sectionRemoveHandler = (section: CourseSection) => {
     updateField(
       "sections",
-      course.sections.filter((e) => e.name !== name)
+      course.sections.filter((e) => e.name !== section.name)
     );
+    setSelectedSection(undefined);
   };
 
   const sectionAddedHandler = (section: CourseSection) => {
-    updateField("sections", [...course.sections, section]);
+    const updatedSections = course.sections.map(
+      (s) => (s.name === section.name ? section : s) // Replace the existing section if IDs match
+    );
+
+    // Check if the section was new and didn't replace an existing one
+    if (!course.sections.some((s) => s.name === section.name)) {
+      updatedSections.push(section); // Append the new section to the array
+    }
+
+    updateField("sections", updatedSections);
+    setSelectedSection(undefined);
     setAddSectionVisible(false);
   };
 
+  const sectionEditHandler = (section: CourseSection) => {
+    setSelectedSection(section);
+    setAddSectionVisible(true);
+  };
+
   const sectionAddCancelHandler = () => {
+    setSelectedSection(undefined);
     setAddSectionVisible(false);
   };
 
@@ -123,25 +143,33 @@ const AddCourseForm = ({
           onColorSelect={colorSelectedHandler}
         />
       </div>
-      <div>
+      {/* <div>
         <button
           onClick={() => setAddSectionVisible(true)}
           className="bg-bittersweet text-white text-s px-4 py-1 rounded-lg shadow-lg hover:bg-bittersweet-700 transition duration-300"
         >
           + New Section
         </button>
-      </div>
-      <div className="px-6">
-        <CourseSectionList
+      </div> */}
+      <div className="">
+        {/* <CourseSectionList
           sections={course.sections}
           onRemove={sectionRemoveHandler}
+        /> */}
+        <CourseSectionTable
+          sections={course.sections}
+          onAdd={() => setAddSectionVisible(true)}
+          onEdit={sectionEditHandler}
+          onDelete={sectionRemoveHandler}
         />
       </div>
 
       {addSectionVisible && (
         <AddSectionForm
+          defaultValue={selectedSection}
           onSubmit={sectionAddedHandler}
           onCancel={sectionAddCancelHandler}
+          invalidNames={course.sections.map((s) => s.name)}
         />
       )}
 

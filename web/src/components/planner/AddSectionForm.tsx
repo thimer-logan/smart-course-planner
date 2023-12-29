@@ -12,6 +12,7 @@ declare type RangeValue<DateType> =
   | null;
 
 interface AddSectionFormProps {
+  defaultValue?: CourseSection;
   onSubmit: (section: CourseSection) => void;
   onCancel: () => void;
   invalidNames?: string[];
@@ -25,7 +26,11 @@ interface FormInputs {
   times: RangeValue<dayjs.Dayjs>;
 }
 
-const AddSectionForm = ({ onSubmit, onCancel }: AddSectionFormProps) => {
+const AddSectionForm = ({
+  defaultValue,
+  onSubmit,
+  onCancel,
+}: AddSectionFormProps) => {
   const {
     handleSubmit,
     formState: { errors },
@@ -35,11 +40,16 @@ const AddSectionForm = ({ onSubmit, onCancel }: AddSectionFormProps) => {
     setValue,
   } = useForm<FormInputs>({
     defaultValues: {
-      name: "",
-      location: "",
-      instructor: "",
-      days: [],
-      times: null,
+      name: defaultValue?.name || "",
+      location: defaultValue?.location || "",
+      instructor: defaultValue?.instructor || "",
+      days: defaultValue?.timeslots.map((s) => s.dayOfWeek) || [],
+      times: defaultValue?.timeslots
+        ? [
+            dayjs(defaultValue?.timeslots[0].startTime, "HH:mm"),
+            dayjs(defaultValue?.timeslots[0].endTime, "HH:mm"),
+          ]
+        : null,
     },
   });
 
