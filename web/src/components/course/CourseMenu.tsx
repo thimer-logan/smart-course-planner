@@ -7,12 +7,14 @@ import CourseList from "./CourseList";
 interface CourseMenuProps {
   courses: Course[];
   onCourseAdded: (course: Course) => void;
+  onCourseChanged: (course: Course) => void;
   onCourseRemoved: (course: Course) => void;
 }
 
 const CourseMenu = ({
   courses,
   onCourseAdded,
+  onCourseChanged,
   onCourseRemoved,
 }: CourseMenuProps) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -35,7 +37,11 @@ const CourseMenu = ({
   };
 
   const courseAddedHandler = (course: Course) => {
-    onCourseAdded(course);
+    if (courses.findIndex((c) => c.id === course.id) !== -1) {
+      onCourseChanged(course);
+    } else {
+      onCourseAdded(course);
+    }
     setModalOpen(false);
   };
 
