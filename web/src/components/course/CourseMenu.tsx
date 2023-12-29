@@ -51,7 +51,7 @@ const CourseMenu = ({
 
   return (
     <>
-      <div className="p-4 w-64 bg-white rounded-lg shadow-md">
+      <div className="flex-grow p-4 w-64 bg-white">
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-lg font-bold text-gray-700">Courses</h2>
           <button
