@@ -19,3 +19,8 @@ export interface CourseEvent extends Event {
   id: string;
   color: string;
 }
+
+export interface CourseResponse {
+  id: string;
+  timeslot: Timeslot[];
+}
