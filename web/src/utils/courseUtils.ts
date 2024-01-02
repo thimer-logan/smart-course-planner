@@ -22,6 +22,10 @@ export const getDayOfWeek = (dayName: string): Date => {
   return targetDay;
 };
 
+export const stringToDayOfWeek = (day: string): DayOfWeek => {
+  return DayOfWeek[day as keyof typeof DayOfWeek];
+};
+
 export const timeslotToEvent = (timeslot: Timeslot): CourseEvent => {
   const day = getDayOfWeek(timeslot.dayOfWeek);
 
@@ -121,6 +125,14 @@ export const sortTimeslotsByDay = (timeslots: Timeslot[]): Timeslot[] => {
 
     return order.indexOf(a.dayOfWeek) - order.indexOf(b.dayOfWeek);
   });
+};
+
+export const isTimeslotEqual = (a: Timeslot, b: Timeslot) => {
+  return (
+    a.dayOfWeek === b.dayOfWeek &&
+    a.startTime.padStart(5, "0") === b.startTime.padStart(5, "0") &&
+    a.endTime.padStart(5, "0") === b.endTime.padStart(5, "0")
+  );
 };
 
 export const timeslotToString = (slot: Timeslot) => {
