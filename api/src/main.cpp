@@ -17,7 +17,7 @@ json::value timeslot_to_json(const Timeslot& slot) {
     int i = 0;
     for (const auto& pair : slot.get_day_time_pairs()) {
         json::value timeslot_pair = json::value::object();
-        timeslot_pair[U("day")] = json::value::string(conversions::to_string_t(day_to_string(pair.day)));
+        timeslot_pair[U("dayOfWeek")] = json::value::string(conversions::to_string_t(day_to_string(pair.day)));
         timeslot_pair[U("startTime")] = json::value::string(conversions::to_string_t(convert_time_string({pair.start_hour, pair.start_minute})));
         timeslot_pair[U("endTime")] = json::value::string(conversions::to_string_t(convert_time_string({pair.end_hour, pair.end_minute})));
         timeslot[i] = timeslot_pair;
@@ -54,7 +54,7 @@ void handle_post(http_request request) {
                     if (timeslot.is_array()) {
                         std::set<DayTimePair> pairs;
                         for (auto& slot : timeslot.as_array()) {
-                            DayOfWeek day = string_to_day(conversions::to_utf8string(slot[U("day")].as_string()));
+                            DayOfWeek day = string_to_day(conversions::to_utf8string(slot[U("dayOfWeek")].as_string()));
                             auto start_time = convert_time(conversions::to_utf8string(slot[U("startTime")].as_string()));
                             auto end_time = convert_time(conversions::to_utf8string(slot[U("endTime")].as_string()));
 
@@ -96,6 +96,8 @@ void handle_post(http_request request) {
             json_schedules[i] = json_schedule;
             i++;
         }
+
+        std::cout << "Response created of size " << json_schedules.size() << std::endl;
 
         http_response response(status_codes::OK);
         response.headers().add(U("Access-Control-Allow-Origin"), U("*"));
