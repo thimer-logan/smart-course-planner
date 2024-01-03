@@ -1,5 +1,5 @@
 import { courseHexColors } from "../constants/courseColors";
-import Course from "../types/Course";
+import Course, { CourseSectionType } from "../types/Course";
 import { DayOfWeek } from "../types/Timeslot";
 
 const courses: Course[] = [
@@ -9,6 +9,7 @@ const courses: Course[] = [
     sections: [
       {
         name: "LEC B1",
+        type: CourseSectionType.Lecture,
         location: "MEC 4-3",
         instructor: "John Smith",
         timeslots: [
@@ -38,6 +39,7 @@ const courses: Course[] = [
     sections: [
       {
         name: "LEC A1",
+        type: CourseSectionType.Lecture,
         location: "NREF 1-2",
         instructor: "Rick Sanchez",
         timeslots: [
@@ -55,11 +57,25 @@ const courses: Course[] = [
       },
       {
         name: "LAB H22",
+        type: CourseSectionType.Lab,
         location: "ETLC 5-11",
         instructor: "Bob Jenkins",
         timeslots: [
           {
             dayOfWeek: DayOfWeek.Tuesday,
+            startTime: "14:00",
+            endTime: "16:50",
+          },
+        ],
+      },
+      {
+        name: "LAB H44",
+        type: CourseSectionType.Lab,
+        location: "ETLC 5-11",
+        instructor: "Bob Jenkins",
+        timeslots: [
+          {
+            dayOfWeek: DayOfWeek.Thursday,
             startTime: "14:00",
             endTime: "16:50",
           },
@@ -73,7 +89,31 @@ const courses: Course[] = [
     name: "Intro to Software Engineering",
     sections: [
       {
+        name: "LEC A1",
+        type: CourseSectionType.Lecture,
+        location: "CCIS L1-140",
+        instructor: "Bob Ross",
+        timeslots: [
+          {
+            dayOfWeek: DayOfWeek.Monday,
+            startTime: "11:00",
+            endTime: "11:50",
+          },
+          {
+            dayOfWeek: DayOfWeek.Wednesday,
+            startTime: "11:00",
+            endTime: "11:50",
+          },
+          {
+            dayOfWeek: DayOfWeek.Friday,
+            startTime: "11:00",
+            endTime: "11:50",
+          },
+        ],
+      },
+      {
         name: "LEC B1",
+        type: CourseSectionType.Lecture,
         location: "CCIS L1-140",
         instructor: "Bob Ross",
         timeslots: [

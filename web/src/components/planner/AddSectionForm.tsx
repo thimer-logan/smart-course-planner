@@ -2,8 +2,8 @@ import React from "react";
 import DayPicker from "../ui/DayPicker";
 import dayjs from "dayjs";
 import Timeslot, { DayOfWeek } from "../../types/Timeslot";
-import { Input, TimePicker } from "antd";
-import { CourseSection } from "../../types/Course";
+import { Input, Select, TimePicker } from "antd";
+import { CourseSection, CourseSectionType } from "../../types/Course";
 import { Controller, SubmitHandler, useForm } from "react-hook-form";
 
 declare type EventValue<DateType> = DateType | null;
@@ -20,6 +20,7 @@ interface AddSectionFormProps {
 
 interface FormInputs {
   name: string;
+  type: CourseSectionType;
   location: string;
   instructor: string;
   days: DayOfWeek[];
@@ -35,12 +36,12 @@ const AddSectionForm = ({
     handleSubmit,
     formState: { errors },
     control,
-    getFieldState,
     getValues,
     setValue,
   } = useForm<FormInputs>({
     defaultValues: {
       name: defaultValue?.name || "",
+      type: defaultValue?.type || CourseSectionType.Lecture,
       location: defaultValue?.location || "",
       instructor: defaultValue?.instructor || "",
       days: defaultValue?.timeslots.map((s) => s.dayOfWeek) || [],
@@ -71,6 +72,7 @@ const AddSectionForm = ({
 
     const section: CourseSection = {
       name: data.name,
+      type: CourseSectionType.Lecture,
       timeslots: timeslots,
       location: data.location,
       instructor: data.instructor,
@@ -78,8 +80,6 @@ const AddSectionForm = ({
 
     onSubmit(section);
   };
-
-  const inputStyles = "hover:border-bittersweet focus:border-bittersweet";
 
   const toggleDay = (day: DayOfWeek) => {
     const days = getValues().days;
@@ -112,9 +112,6 @@ const AddSectionForm = ({
             <Input
               id="name"
               type="text"
-              className={`${inputStyles} ${
-                getFieldState("name").invalid && "border-red-600"
-              }`}
               placeholder="Name"
               autoComplete="off"
               {...field}
@@ -128,9 +125,6 @@ const AddSectionForm = ({
           render={({ field }) => (
             <Input
               id="location"
-              className={`${inputStyles} ${
-                getFieldState("location").invalid && "border-red-600"
-              }`}
               placeholder="Location"
               autoComplete="off"
               {...field}
@@ -144,11 +138,44 @@ const AddSectionForm = ({
           render={({ field }) => (
             <Input
               id="instructor"
-              className={`${inputStyles} ${
-                getFieldState("instructor").invalid && "border-red-600"
-              }`}
               placeholder="Instructor"
               autoComplete="off"
+              {...field}
+            />
+          )}
+        />
+      </div>
+      <div className="flex flex-row justify-between items-center gap-2">
+        <Controller
+          name="type"
+          control={control}
+          rules={{
+            required: "Please enter a section type",
+            validate: (value, formValues) => value !== null,
+          }}
+          render={({ field }) => (
+            <Select
+              className="flex-grow flex-basis-0"
+              defaultValue={field.value}
+              options={Object.values(CourseSectionType).map((value) => ({
+                value: value,
+                label: value,
+              }))}
+              {...field}
+            />
+          )}
+        />
+        <Controller
+          name="times"
+          control={control}
+          rules={{
+            required: "Please enter a start and end time",
+            validate: (value, formValues) => value !== null,
+          }}
+          render={({ field }) => (
+            <TimePicker.RangePicker
+              format="HH:mm"
+              onOk={timeSelectedHandler}
               {...field}
             />
           )}
@@ -164,25 +191,6 @@ const AddSectionForm = ({
           }}
           render={({ field }) => (
             <DayPicker selectedDays={field.value} toggleDay={toggleDay} />
-          )}
-        />
-
-        <Controller
-          name="times"
-          control={control}
-          rules={{
-            required: "Please enter a start and end time",
-            validate: (value, formValues) => value !== null,
-          }}
-          render={({ field }) => (
-            <TimePicker.RangePicker
-              className={`${inputStyles} ${
-                getFieldState("times").invalid && "border-red-600"
-              }`}
-              format="HH:mm"
-              onOk={timeSelectedHandler}
-              {...field}
-            />
           )}
         />
       </div>

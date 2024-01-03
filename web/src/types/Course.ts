@@ -10,9 +10,16 @@ export default interface Course {
 
 export interface CourseSection {
   name: string;
+  type: CourseSectionType;
   timeslots: Timeslot[];
   location: string;
   instructor: string;
+}
+
+export enum CourseSectionType {
+  Lecture = "Lecture",
+  Lab = "Lab",
+  Seminar = "Seminar",
 }
 
 export interface CourseEvent extends Event {
