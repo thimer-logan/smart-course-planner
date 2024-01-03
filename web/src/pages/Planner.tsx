@@ -1,18 +1,18 @@
-import React, { useMemo } from "react";
 import CourseMenu from "../components/course/CourseMenu";
-import Schedule from "../components/schedule/Schedule";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { courseToCourseEvent } from "../utils/courseUtils";
 import Course from "../types/Course";
-import { addCourse, removeCourse, updateCourse } from "../redux/plannerSlice";
+import {
+  addCourse,
+  planCoursesAsync,
+  removeCourse,
+  updateCourse,
+} from "../redux/plannerSlice";
+import ScheduleLayout from "../components/schedule/ScheduleLayout";
 
 const Planner = () => {
   const courses = useAppSelector((state) => state.planner.courses);
+  const schedules = useAppSelector((state) => state.planner.schedules);
   const dispatch = useAppDispatch();
-  const events = useMemo(
-    () => courses.flatMap((course: Course) => courseToCourseEvent(course)),
-    [courses]
-  );
 
   const courseAddedHandler = (course: Course) => {
     dispatch(addCourse(course));
@@ -26,7 +26,9 @@ const Planner = () => {
     dispatch(removeCourse(course.id));
   };
 
-  const generatePressedHandler = () => {};
+  const generatePressedHandler = () => {
+    dispatch(planCoursesAsync(courses));
+  };
 
   return (
     <>
@@ -46,7 +48,9 @@ const Planner = () => {
           </button>
         </div>
       </div>
-      <Schedule events={events} />
+      <div className="flex flex-row flex-grow">
+        <ScheduleLayout schedules={schedules} />
+      </div>
     </>
   );
 };
