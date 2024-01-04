@@ -31,6 +31,7 @@ const AddSectionForm = ({
   defaultValue,
   onSubmit,
   onCancel,
+  invalidNames,
 }: AddSectionFormProps) => {
   const {
     handleSubmit,
@@ -72,7 +73,7 @@ const AddSectionForm = ({
 
     const section: CourseSection = {
       name: data.name,
-      type: CourseSectionType.Lecture,
+      type: data.type,
       timeslots: timeslots,
       location: data.location,
       instructor: data.instructor,
@@ -106,7 +107,9 @@ const AddSectionForm = ({
           control={control}
           rules={{
             required: "Please enter a section name",
-            validate: (value, formValues) => value !== null,
+            validate: (value, formValues) =>
+              value !== null &&
+              (!invalidNames || !invalidNames.includes(value)),
           }}
           render={({ field }) => (
             <Input

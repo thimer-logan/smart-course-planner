@@ -35,10 +35,17 @@ const columns: ColumnsType<CourseSection> = [
   {
     title: "Name",
     dataIndex: "name",
+    key: "name",
+  },
+  {
+    title: "Type",
+    dataIndex: "type",
+    // key: "type",
   },
   {
     title: "Timeslots",
     dataIndex: "timeslots",
+    // key: "timeslots",
     render(value, record, index) {
       return (
         <div className="text-sm my-auto">
@@ -50,10 +57,12 @@ const columns: ColumnsType<CourseSection> = [
   {
     title: "Location",
     dataIndex: "location",
+    // key: "location",
   },
   {
     title: "Instructor",
     dataIndex: "instructor",
+    // key: "instructor",
   },
 ];
 
@@ -81,9 +90,12 @@ const CourseSectionTable = ({
         dataSource={sections.length > 0 ? sections : []}
         size="small"
         pagination={false}
+        rowKey="name"
         rowSelection={{
           type: "radio",
+          preserveSelectedRowKeys: true,
           onSelect: (record, selected) => {
+            console.log(record);
             setSelectedSection(record);
           },
         }}
