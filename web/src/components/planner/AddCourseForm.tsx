@@ -113,7 +113,9 @@ const AddCourseForm = ({
 
   return (
     <div className="flex flex-col gap-3">
-      <h2 className="font-bold text-lg">Add new course</h2>
+      <h2 className="font-bold text-lg">
+        {defaultValue ? "Manage Course" : "Add New Course"}
+      </h2>
       <div className="flex flex-row justify-between gap-3 my-2">
         <Input
           id="id"
