@@ -12,6 +12,9 @@ const CourseList = ({
   onCourseClicked,
   onCourseDelete,
 }: CourseListProps) => {
+  if (courses.length <= 0) {
+    return <div>Add a course to get started</div>;
+  }
   return (
     <div>
       {courses.map((course, index) => (
