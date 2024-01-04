@@ -52,16 +52,6 @@ const getCourseFromString = (course: any, courses: Course[]): Course | null => {
 
   const foundCourse = { ...courses[idx] };
 
-  // Create a new copy of sections with the necessary filter applied
-  // foundCourse.sections = foundCourse.sections.map((section) => ({
-  //   ...section,
-  //   timeslots: section.timeslots.filter((slot) =>
-  //     parsedCourse.timeslot.some((parsedSlot) =>
-  //       isTimeslotEqual(slot, parsedSlot)
-  //     )
-  //   ),
-  // }));
-
   foundCourse.sections = foundCourse.sections.filter((section) =>
     section.timeslots.every((slot) =>
       parsedCourse.timeslot.some((parsedSlot) => {

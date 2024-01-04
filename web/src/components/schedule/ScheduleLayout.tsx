@@ -13,8 +13,6 @@ const ScheduleLayout = ({ schedules }: ScheduleLayoutProps) => {
   const [selectedSchedule, setSelectedSchedule] = useState<number>(0);
   const events = useMemo(() => {
     // Check if schedules is empty or selectedSchedule is out of bounds
-    console.log(selectedSchedule);
-
     if (
       schedules.length === 0 ||
       selectedSchedule < 0 ||
