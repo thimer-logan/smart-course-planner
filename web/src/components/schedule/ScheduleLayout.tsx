@@ -27,8 +27,6 @@ const ScheduleLayout = ({ schedules }: ScheduleLayoutProps) => {
   }, [schedules, selectedSchedule]);
 
   const pageChangedHandler = (newPage: number) => {
-    console.log("new page: ", newPage);
-
     if (newPage > 0 && newPage <= schedules.length) {
       setSelectedSchedule(newPage - 1);
     }
@@ -37,11 +35,13 @@ const ScheduleLayout = ({ schedules }: ScheduleLayoutProps) => {
   return (
     <div className="flex flex-col flex-grow">
       <MySchedule events={events} />
-      <ScheduleFooter
-        page={selectedSchedule + 1}
-        totalPages={schedules.length}
-        onPageChanged={pageChangedHandler}
-      />
+      {events.length > 0 && (
+        <ScheduleFooter
+          page={selectedSchedule + 1}
+          totalPages={schedules.length}
+          onPageChanged={pageChangedHandler}
+        />
+      )}
     </div>
   );
 };
