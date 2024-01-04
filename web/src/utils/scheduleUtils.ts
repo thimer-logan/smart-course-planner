@@ -64,3 +64,12 @@ const getCourseFromString = (course: any, courses: Course[]): Course | null => {
 
   return foundCourse;
 };
+
+export const createSchedule = (courses: Course[], id?: string) => {
+  const schedule: Schedule = {
+    id: id ? id : "0",
+    courses: courses,
+  };
+
+  return schedule;
+};
