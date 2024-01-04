@@ -5,6 +5,7 @@ import { Input } from "antd";
 import ColorPicker from "../ui/ColorPicker";
 import { courseHexColors } from "../../constants/courseColors";
 import CourseSectionTable from "../course/CourseSectionTable";
+import Modal from "../ui/Modal";
 
 interface AddCourseFormProps {
   onSubmit: (course: Course) => void;
@@ -143,19 +144,7 @@ const AddCourseForm = ({
           onColorSelect={colorSelectedHandler}
         />
       </div>
-      {/* <div>
-        <button
-          onClick={() => setAddSectionVisible(true)}
-          className="bg-bittersweet text-white text-s px-4 py-1 rounded-lg shadow-lg hover:bg-bittersweet-700 transition duration-300"
-        >
-          + New Section
-        </button>
-      </div> */}
       <div className="">
-        {/* <CourseSectionList
-          sections={course.sections}
-          onRemove={sectionRemoveHandler}
-        /> */}
         <CourseSectionTable
           sections={course.sections}
           onAdd={() => setAddSectionVisible(true)}
@@ -165,12 +154,16 @@ const AddCourseForm = ({
       </div>
 
       {addSectionVisible && (
-        <AddSectionForm
-          defaultValue={selectedSection}
-          onSubmit={sectionAddedHandler}
-          onCancel={sectionAddCancelHandler}
-          invalidNames={course.sections.map((s) => s.name)}
-        />
+        <Modal className="top-20">
+          <AddSectionForm
+            defaultValue={selectedSection}
+            onSubmit={sectionAddedHandler}
+            onCancel={sectionAddCancelHandler}
+            invalidNames={course.sections
+              .map((s) => s.name)
+              .filter((s) => s !== selectedSection?.name)}
+          />
+        </Modal>
       )}
 
       {Object.entries(errors).map(
