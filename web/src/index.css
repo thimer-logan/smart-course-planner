@@ -2,6 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "rsuite/dist/rsuite-no-reset.min.css";
+
+:root {
+  --rs-sidenav-default-bg: theme(colors.oxford_blue.500);
+  --rs-sidenav-default-text: theme(colors.white.500);
+  --rs-sidenav-default-selected-text: theme(colors.oxford_blue.200);
+  --rs-sidenav-default-hover-bg: theme(colors.oxford_blue.300);
+  --rs-sidenav-default-hover-text: theme(colors.white.500);
+}
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -9,9 +23,15 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+main {
+  max-width: 1024px;
+  margin: auto;
 }
